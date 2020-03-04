@@ -1,0 +1,5 @@
+int main(){
+	int a, b, c ;
+	a = (3+2)*b/c;
+	int bool = (1 == a) || (2 > 3) && b ;
+}
