@@ -5,13 +5,13 @@
 vID [a-zA-Z][a-zA-Z0-9_]*
 int [0-9]+
 /*
-float [0-9]+[\.][0-9]+
+float [0-9]+[\.][0-9]+ --> USE ATOF
 exp {float}[e][\+]{int}
 */
 
 %%
 
-"main" {return tMAIN;}
+
 
 "{" {return tOB;}
 "}" {return tCB;}
@@ -19,9 +19,12 @@ exp {float}[e][\+]{int}
 "(" {return tOP;}
 ")" {return tCP;}
 
+
+"main" {return tMAIN;}
 "return" {return tRET;}
 "printf" {return tPRI;}
-
+"if" {return tIF;}
+"else" {return tELS;}
 
 "const" {return tCST;}
 "int" {return tINT;}
@@ -43,8 +46,10 @@ exp {float}[e][\+]{int}
 "," {return tC;}
 ";" {return tEI;}
 
-{int} {return tVAL;}
-{vID} {return tID;}
+{int} { yylval.nb = atoi(yytext);
+        return tVAL; }
+{vID} { yylval.str = yytext;
+        return tID;}
 
 
 %%
