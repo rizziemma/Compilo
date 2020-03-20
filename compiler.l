@@ -48,7 +48,7 @@ exp {float}[e][\+]{int}
 
 {int} { yylval.nb = atoi(yytext);
         return tVAL; }
-{vID} { yylval.str = yytext;
+{vID} { yylval.str = strdup(yytext);
         return tID;}
 
 

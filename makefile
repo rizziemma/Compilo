@@ -1,7 +1,7 @@
 all :
 	yacc -d -v -t compiler.y
-	flex -d compiler.l
-	gcc lex.yy.c y.tab.c -o compiler
+	flex compiler.l
+	gcc lex.yy.c y.tab.c symbols.c -o compiler
 
 
 lexer :

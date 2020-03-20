@@ -1,5 +1,6 @@
 %{
 	#include <stdio.h>
+	#include "symbols.h"
 	int yylex();
 	void yyerror(char * str);
 %}
@@ -34,7 +35,7 @@ Main :
 	tINT tMAIN tOP tCP Body;
 
 Body : 
-    tOB /*depth++*/ inBody tCB /*depth--*/;
+    tOB {depth_incr();} inBody tCB {depth_decr();};
 
 inBody : 
 	//null
@@ -44,15 +45,21 @@ inBody :
     ;
 
 Def :
-	tINT tID DefN tEI  // ex : int a, b, c;
-    |tINT tID tEQ Expr tEI;
-
+	 tINT tID {add_symbol($2, 0, 0);} DefN tEI  		//int a, b, c;
+	|tCST tINT tID {add_symbol($3, 1, 0);} DefNC tEI		//cst a, b, c;
+    |tINT tID {add_symbol($2, 0, 1);} tEQ Expr tEI;	//int a = 1;
+	|tCST tINT tID {add_symbol($3, 1, 1);} tEQ Expr tEI; //cst a = 1;
+	
 DefN :
 	//null
-	| tC tID DefN;
+	| tC tID {add_symbol($2, 0, 0);} DefN;
+
+DefNC :
+	//null
+	| tC tID {add_symbol($2, 1, 0);} DefNC;
 
 Affect :
-	tID tEQ Expr tEI;
+	tID tEQ Expr {init($1);} tEI;
 
 
 Expr :
@@ -80,6 +87,6 @@ Cond :
     tOP Expr tCP;
 
 %%
-void yyerror(char * str){printf("%s", str);}
+void yyerror(char * str){printf("%s\n", str);}
 int main(){yyparse(); printf(" fin \n"); return 0;}
 

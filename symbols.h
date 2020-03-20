@@ -5,23 +5,25 @@
 typedef struct _symbol {
     char * id;
     int constant;
+    int init;
     int depth;
-    int memory;
 } symbol;
 
 //table des symboles
-symbol[200] table;
+symbol table[200];
 
 int depth;
-int index;
+int next;
 int mem;
 
-void add_symbol(symbol s);
+void add_symbol(char * id, int constant, int init);
+
+void init(char * id);
 
 void depth_incr();
 
 void depth_decr();
 
-int get_addr(symbol s);
+int addr(char * id);
 
 #endif
