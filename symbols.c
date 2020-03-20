@@ -24,7 +24,7 @@ int mem = 0;
 //parcours de symbol_index a 0 pour trouver la plus basse profondeur
 int addr(char * id){
     int i = symbol_index;
-    while((i>=0) &&(table[i].depth >= 0)){
+    while(i>=0){
     	if(strcmp(table[i].id, id) == 0){ 
     		return i; //symbole trouvé
     	}
@@ -35,7 +35,7 @@ int addr(char * id){
 }
 
 //check si l'id existe à cette profondeur a cette profondeur
-int exists(char * id, int d) {
+int exists_depth(char * id, int d) {
 	int i = symbol_index;
     while((i>=0) &&(table[i].depth >= d)){
     	if(strcmp(table[i].id, id)==0){ 
@@ -46,10 +46,19 @@ int exists(char * id, int d) {
     return 0;
 }
 
-
+int exists(char * id) {
+	int i = symbol_index;
+    while((i>=0)){
+    	if(strcmp(table[i].id, id)==0){ 
+    		return 1; //symbole trouvé
+    	}
+    	i--;
+    }
+    return 0;
+}
 
 void add_symbol(char * id, int constant, int init){
-	if(!exists(id, depth)){
+	if(!exists_depth(id, depth)){
 		symbol_index ++;
 		
         table[symbol_index].id = id;
@@ -71,7 +80,6 @@ void init(char * id){
 			yyerror("Erreur, symbole déjà init");
 		}else{
 			table[i].init = 1;
-			printf("Symbole %s init, depth = %d, i = %d\n", id, depth, symbol_index);
 		}	
 	}
 }
@@ -79,7 +87,6 @@ void init(char * id){
 
 void depth_incr(){
     depth ++;
-    printf("Depth ++, depth = %d, i = %d\n", depth, symbol_index);
 }
 
 //cherche l'index du tableau correspondant au dernier symbole de niveau d-1 
@@ -90,7 +97,6 @@ void depth_decr(){
 		i--;
     }
     symbol_index = i;
-    printf("Depth --, depth = %d, i = %d\n", depth, symbol_index);
 }
 
 

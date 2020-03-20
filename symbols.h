@@ -26,4 +26,8 @@ void depth_decr();
 
 int addr(char * id);
 
+int exists_depth(char * id, int d);
+
+int exists(char * id);
+
 #endif
