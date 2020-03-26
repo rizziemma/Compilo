@@ -13,7 +13,7 @@ typedef struct _symbol {
 } symbol;
 
 //table des symboles
-symbol table[200];
+symbol table_symbols[200];
 
 int depth = 0;
 int symbol_index = -1;
@@ -23,7 +23,7 @@ int symbol_index = -1;
 int addr(char * id){
     int i = symbol_index;
     while(i>=0){
-    	if(strcmp(table[i].id, id) == 0){ 
+    	if(strcmp(table_symbols[i].id, id) == 0){ 
     		return i; //symbole trouvé
     	}
     	i--;
@@ -35,8 +35,8 @@ int addr(char * id){
 //check si l'id existe à cette profondeur a cette profondeur
 int exists_depth(char * id, int d) {
 	int i = symbol_index;
-    while((i>=0) &&(table[i].depth >= d)){
-    	if(strcmp(table[i].id, id)==0){ 
+    while((i>=0) &&(table_symbols[i].depth >= d)){
+    	if(strcmp(table_symbols[i].id, id)==0){ 
     		return 1; //symbole trouvé
     	}
     	i--;
@@ -47,7 +47,7 @@ int exists_depth(char * id, int d) {
 int exists(char * id) {
 	int i = symbol_index;
     while((i>=0)){
-    	if(strcmp(table[i].id, id)==0){ 
+    	if(strcmp(table_symbols[i].id, id)==0){ 
     		return 1; //symbole trouvé
     	}
     	i--;
@@ -59,10 +59,10 @@ void add_symbol(char * id, int constant, int init){
 	if(!exists_depth(id, depth)){
 		symbol_index ++;
 		
-        table[symbol_index].id = id;
-        table[symbol_index].constant = constant;
-        table[symbol_index].init = init;
-        table[symbol_index].depth = depth;
+        table_symbols[symbol_index].id = id;
+        table_symbols[symbol_index].constant = constant;
+        table_symbols[symbol_index].init = init;
+        table_symbols[symbol_index].depth = depth;
 
     }else{
         yyerror("Erreur, le symbole existe deja");
@@ -73,10 +73,10 @@ void add_symbol(char * id, int constant, int init){
 void init(char * id){
 	int i = addr(id);
 	if(i>=0){
-		if(table[i].init == 1 && table[i].constant == 1){
+		if(table_symbols[i].init == 1 && table_symbols[i].constant == 1){
 			yyerror("Erreur, symbole déjà init");
 		}else{
-			table[i].init = 1;
+			table_symbols[i].init = 1;
 		}	
 	}
 }
@@ -90,7 +90,7 @@ void depth_incr(){
 void depth_decr(){
 	int i = symbol_index;
 	depth --;
-	while((i>=0) &&(table[i].depth > depth)){ 
+	while((i>=0) &&(table_symbols[i].depth > depth)){ 
 		i--;
     }
     symbol_index = i;

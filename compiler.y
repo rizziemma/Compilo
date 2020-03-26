@@ -13,12 +13,13 @@
     char * str;
 }
 
-%token tMAIN tOB tCB tOP tCP tRET tPRI tCST tINT tADD tSUB tMUL tDIV tEQ tINF tSUP tEQU tOR tAND tC tEI tIF tELS tWHL
+%token tMAIN tOB tCB tOP tCP tRET tPRI tCST tINT tADD tSUB tMUL tDIV tEQ tINF tSUP tEQU tOR tAND tC tEI tELS tWHL
 %token <nb> tVAL
 %token <str> tID
+%token <nb> tIF
 
 %type <nb> Expr
-
+%type <nb> Then
 %right tEQ
 
 //moins prioritaire
@@ -27,6 +28,9 @@
 %left tMUL
 
 //plus prioritaire
+
+%nonassoc EndIf
+%nonassoc tELSE
 
 %%
 %start File;
@@ -65,8 +69,7 @@ DefNC :
 	| tC tID {add_symbol($2, 1, 0);} DefNC;
 
 Affect :
-	tID tEQ Expr {//erreur de segmentation ici
-				init($1);
+	tID tEQ Expr {init($1);
 				  int op[2] = {addr($1), pop()};
 				  add("COP",2,op);} 
 				  	tEI;
@@ -75,7 +78,7 @@ Affect :
 Expr :
 	tVAL    {int op[2]={push(), $1}; add("AFC", 2, op);}  //push la valeur de tVAL
 	|tID    {int op[2]={push(), addr($1)}; add("COP", 2, op);} //push la valeur de la var tID
-	|tOP Expr tCP   {int v = pop(); int op[2]= {push(), v}; add("COP", 2, op);}
+	|tOP Expr tCP   {$$ = $2;}
 	|Expr tADD Expr {int v2=pop(); 
 					 int v1=pop();
 					 int op[3] = {push(), v1, v2};
@@ -110,12 +113,28 @@ Expr :
 
 
 If : 
-    tIF Cond Body
-    | tIF Cond Body tELS Body
+    tIF Cond Then
+    	Body {patch($3, get_next_line(), 1);} 
+    
+    | tIF Cond Then
+    	Body 
+    	tELS {patch($3, get_next_line()+1, 1); //+1 car ligne du JMP apres
+    		  int op[1]={-1}; //-1 temporaire
+    		  $1 = get_next_line();  //save quelle ligne il faudra patcher
+    		  add("JMP", 1, op);} 
+    	Body {patch($1, get_next_line(), 0);}
     ;
+    
 
 Cond :
     tOP Expr tCP;
+
+Then :
+	{int op[2]={pop(), -1}; //-1 temporaire
+     $$ = get_next_line();  //save quelle ligne il faudra patcher
+     add("JMF", 2, op);}
+    ;
+    
 
 %%
 void yyerror(char * str){printf("%s\n", str);}
