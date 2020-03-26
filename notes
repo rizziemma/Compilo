@@ -1,0 +1,3 @@
+TEMP :
+	considere une variable qui represente un stack pointer, push et pop pour ajouter ou supprimmer des variables temporaires -> renvoit l'addr (sp = i) de la variable 
+	

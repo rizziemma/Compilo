@@ -1,5 +1,4 @@
 //imports
-#include <stdio.h>
 #include <string.h>
 
 extern void yyerror(char * str);
@@ -18,7 +17,6 @@ symbol table[200];
 
 int depth = 0;
 int symbol_index = -1;
-int mem = 0;
 
 //retourne l'addr du symbole a la profondeur la plus basse
 //parcours de symbol_index a 0 pour trouver la plus basse profondeur
@@ -65,8 +63,7 @@ void add_symbol(char * id, int constant, int init){
         table[symbol_index].constant = constant;
         table[symbol_index].init = init;
         table[symbol_index].depth = depth;
-    
-        mem +=2;
+
     }else{
         yyerror("Erreur, le symbole existe deja");
     }

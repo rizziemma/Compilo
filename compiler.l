@@ -25,6 +25,7 @@ exp {float}[e][\+]{int}
 "printf" {return tPRI;}
 "if" {return tIF;}
 "else" {return tELS;}
+"while" {return tWHL;}
 
 "const" {return tCST;}
 "int" {return tINT;}
