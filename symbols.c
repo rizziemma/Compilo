@@ -1,5 +1,6 @@
 //imports
 #include <string.h>
+#include "symbols.h"
 
 extern void yyerror(char * str);
 
@@ -13,7 +14,7 @@ typedef struct _symbol {
 } symbol;
 
 //table des symboles
-symbol table_symbols[200];
+symbol table_symbols[MAX_MEM];
 
 int depth = 0;
 int symbol_index = -1;

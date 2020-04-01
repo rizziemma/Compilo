@@ -1,7 +1,9 @@
 #include <stdio.h>
+#include "temp.h"
+#include "symbols.h"
 
 
-int mem = 400;
+int mem = MAX_MEM;
 int index_temp = 0;
 
 int push(){

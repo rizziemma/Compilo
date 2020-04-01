@@ -26,6 +26,7 @@ exp {float}[e][\+]{int}
 "if" {return tIF;}
 "else" {return tELS;}
 "while" {return tWHL;}
+"for" {return tFOR;}
 
 "const" {return tCST;}
 "int" {return tINT;}

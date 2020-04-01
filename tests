@@ -1,14 +1,7 @@
 int main(){
-	int a, b, c ;
-	a = (3+2)*b/c;
-    if(1){
-	    int bool = (1 == a) || (2 > 3) && b ;
-    }
-    else {
-        int a = 3;
-        if(b){
-            a = 2;
-        }
-    }
-    
+	int a;
+	for(a = 0; a<3; a++){
+		printf(a);
+	}
+	return 0;
 }

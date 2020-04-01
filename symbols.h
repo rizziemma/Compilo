@@ -1,6 +1,7 @@
 #ifndef SYMBOLS_H
 #define SYMBOLS_H
 
+#define MAX_MEM 200
 
 //ajoute un symbole a la table
 void add_symbol(char * id, int constant, int init);
