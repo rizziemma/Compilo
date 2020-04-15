@@ -9,5 +9,5 @@ lexer :
 	gcc lex.yy.c -o lexer
 
 clean :
-	rm -f lex.yy.c lexer t.tab.c compiler y.tab.c y.tab.h y.output output.s compiler.yab.c
+	rm -f lex.yy.c lexer t.tab.c compiler y.tab.c y.tab.h y.output output.s compiler.tab.c
 

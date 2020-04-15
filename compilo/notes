@@ -1,0 +1,11 @@
+TEMP :
+	considere une variable qui represente un stack pointer, push et pop pour ajouter ou supprimmer des variables temporaires -> renvoit l'addr (sp = i) de la variable 
+	
+
+Le rapport (10 pages max) et la présentation devront contenir:
+-la démarche conception abordé
+-les choix d’implémentation
+-les problèmes rencontrés et les solutions pour y remédier
+-les résultats obtenus
+-les   instructions   assembleur   rajoutés   et   leur   justification   (si   le   cas   seprésente)
+-le rapport doit être rédigé avec une prise de recul et un esprit desynthèse
