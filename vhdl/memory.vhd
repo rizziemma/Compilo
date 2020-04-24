@@ -61,7 +61,7 @@ Work :process
 			mem(to_integer(unsigned(Addr))) <= Val;
 		end if;
 	end if;
-	end process;
+end process;
 
 end Behavioral;
 
