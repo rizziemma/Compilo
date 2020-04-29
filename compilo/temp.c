@@ -2,18 +2,16 @@
 #include "temp.h"
 #include "symbols.h"
 
-
-int mem = MAX_MEM;
-int index_temp = 0;
+int index_temp = MAX_MEM;
 
 int push(){
 	index_temp ++;
-	return index_temp - 1 + mem;
+	return index_temp - 1;
 }
 
 int pop(){
 	index_temp --;
-	return index_temp + mem;
+	return index_temp;
 }
 
 
