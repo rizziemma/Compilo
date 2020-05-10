@@ -150,7 +150,7 @@ pipe2 : pipeline PORT MAP (
 		OP 	 => OP1,
 		A 		 => A1,
 		B 		 => B1_mux,
-		C 		 =>  C1,
+		C 		 =>  QB,
 		Out_OP => OP2,
 		Out_A  => A2,
 		Out_B  => B2,
@@ -210,27 +210,33 @@ pipe4 : pipeline PORT MAP (
 	
 	
 	--banc de registres
-	W <= '1' when (OP=X"06") else
+	W <= '1' when (OP4>=X"01" and OP4<=X"07" ) else --AFC + COP + ALU + LOAD
 		  '0';
 	
 	--mux1 B1_mux <= OP1, B1
-	B1_mux <= B1; -- AFC
+	B1_mux <= B1 when (OP1=X"06" or OP1=X"07") else --AFC + LOAD 6> modif pas B
+				 QA;  --COP, ALU, STORE -> lecture d'un registre
 	
 	--UAL
-	Ctrl_Alu <= "000";
+	Ctrl_Alu <= OP2(2 downto 0) when (OP2<X"04") else --ALU
+					"000"; --do nothing
 	
 	--mux2 B2_mux <= S, B2, OP2
-	B2_mux <= B2; --AFC
+	B2_mux <= S when (OP2<X"04") else --ALU
+				 B2; --do nothing
 	
 	
 	--mux3 Addr_Mux <= A3, B3, OP3
-	Addr_mux <= X"00"; --AFC
+	Addr_mux <= B3 when (OP3=X"07") else --LOAD
+					A3; --STORE
 	
 	--mem
-	RW <= '0';
+	RW <= '0' when (OP3=X"08") else --STORE
+			'1';
 	
 	--mux4 B3_mux <= Val_Out, B3
-	B3_mux <= B3; --AFC
+	B3_mux <= Val_Out when (OP3=X"07") else --LOAD
+				 B3; 
 	
 	
 	

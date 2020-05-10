@@ -34,7 +34,7 @@
 
 //plus prioritaire
 
-%nonassoc EndIf
+
 %nonassoc tELSE
 
 %%
@@ -231,5 +231,5 @@ AffectFor2 :
 
 %%
 void yyerror(char * str){printf("%s\n", str);}
-int main(){yyparse(); print_code(); print_to_file(); return 0;}
+int main(){yyparse(); /*print_code();*/ print_to_file(); return 0;}
 

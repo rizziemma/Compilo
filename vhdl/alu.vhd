@@ -64,8 +64,8 @@ begin
 	S_sup <= X"01" when Ctrl_Alu = "110" and A > B else X"00";
 	
 	
-	S <=	S_add(7 downto 0)  when Ctrl_Alu = "000" else
-			S_sub					 when Ctrl_Alu = "001" else
+	S <=	S_add(7 downto 0)  when Ctrl_Alu = "001" else
+			S_sub					 when Ctrl_Alu = "011" else
 			S_mul(7 downto 0)  when Ctrl_Alu = "010" else
 --			S_div					 when Ctrl_Alu = "011" else
 			S_inf					 when Ctrl_Alu = "100" else
