@@ -83,7 +83,7 @@ BEGIN
 
 
  
-Ctrl_Alu <= "000", "001" after 100 ns, "010" after 200 ns, "011" after 300 ns, "100" after 400 ns, "101" after 450 ns, "110" after 500 ns, "111" after 550 ns;
+Ctrl_Alu <= "001", "011" after 100 ns, "010" after 200 ns, "100" after 300 ns, "101" after 400 ns, "110" after 450 ns, "111" after 500 ns, "000" after 550 ns;
 A <= X"01", X"FF" after 25 ns, X"0F" after 50 ns, X"01" after 100 ns, X"02" after 150 ns, X"FF" after 225 ns, X"00" after 450 ns, X"FF" after 475 ns, X"00" after 525 ns;
 B <= X"01", X"FF" after 25 ns, X"0F" after 75 ns, X"01" after 100 ns, X"02" after 125 ns, X"F0" after 150 ns, X"03" after 200 ns, X"FF" after 425 ns; 
  

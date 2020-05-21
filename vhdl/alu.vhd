@@ -65,39 +65,37 @@ begin
 	
 	
 	S <=	S_add(7 downto 0)  when Ctrl_Alu = "001" else
-			S_sub					 when Ctrl_Alu = "011" else
 			S_mul(7 downto 0)  when Ctrl_Alu = "010" else
---			S_div					 when Ctrl_Alu = "011" else
-			S_inf					 when Ctrl_Alu = "100" else
-			S_eq					 when Ctrl_Alu = "101" else
-			S_sup					 when Ctrl_Alu = "110" else
+			S_sub					 when Ctrl_Alu = "011" else
+--			S_div					 when Ctrl_Alu = "100" else
+			S_inf					 when Ctrl_Alu = "101" else
+			S_eq					 when Ctrl_Alu = "110" else
+			S_sup					 when Ctrl_Alu = "111" else
 			X"00";
 
-	
-	-- Flag is [CNZV]
 	-- C : carry
 	-- N : negative
 	-- Z : zero
 	-- V : overflow
 	
-	C <=  S_add(8) when Ctrl_Alu = "000"  else						--carry sur l'addition : le bit de poid fort = 1
+	C <=  S_add(8) when Ctrl_Alu = "001"  else						--carry sur l'addition : le bit de poid fort = 1
 			'1' when Ctrl_Alu = "010" and S_mul(15 downto 8) > X"00" else --carry sur la multiplication, il y a au moins un bit à 1 après le 8eme
 			'0';
 			
-	N <= S_add(7) when Ctrl_Alu = "000" else
-			S_sub(7) when Ctrl_Alu = "001" else
+	N <= S_add(7) when Ctrl_Alu = "001" else
+			S_sub(7) when Ctrl_Alu = "011" else
 			S_mul(15) when Ctrl_Alu = "010" else
---			S_div(7) when Ctrl_Alu = "011" else
+--			S_div(7) when Ctrl_Alu = "100" else
 			'0';
 	
-	Z <=  '1' when Ctrl_Alu = "000" and S_add(7 downto 0) = X"00" else
-			'1' when Ctrl_Alu = "001" and S_sub(7 downto 0) = X"00" else
+	Z <=  '1' when Ctrl_Alu = "001" and S_add(7 downto 0) = X"00" else
+			'1' when Ctrl_Alu = "011" and S_sub(7 downto 0) = X"00" else
 			'1' when Ctrl_Alu = "010" and S_mul(7 downto 0) = X"00" else
---			'1' when Ctrl_Alu = "011" and S_div(7 downto 0) = X"00" else
+--			'1' when Ctrl_Alu = "100" and S_div(7 downto 0) = X"00" else
 			'0';
 	
-	O <= 	'1' when Ctrl_Alu = "000" and ( ( S_add(7) = '0' and A(7) = '1' and B(7) = '1') or (S_add(7) = '1' and A(7) = '0' and B(7) = '0')) else
-			'1' when Ctrl_Alu = "001" and ( ( S_sub(7) = '0' and A(7) = '1' and B(7) = '0') or (S_sub(7) = '1' and A(7) = '0' and B(7) = '1')) else
+	O <= 	'1' when Ctrl_Alu = "001" and ( ( S_add(7) = '0' and A(7) = '1' and B(7) = '1') or (S_add(7) = '1' and A(7) = '0' and B(7) = '0')) else
+			'1' when Ctrl_Alu = "011" and ( ( S_sub(7) = '0' and A(7) = '1' and B(7) = '0') or (S_sub(7) = '1' and A(7) = '0' and B(7) = '1')) else
 			'1' when Ctrl_Alu = "010" and ( S_mul(15 downto 8) > X"0") else
 			'0';	
 

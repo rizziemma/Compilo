@@ -1,8 +1,12 @@
 int main(){
 	if(1){
-	int a = 1;
+		int a = 1;
 	}else{
-	int b = 3 - 2;
+		int b = 3;
+	}
+
+	if(2){
+		printf(1);
 	}
 return 0;
 }

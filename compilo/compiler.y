@@ -35,8 +35,6 @@
 //plus prioritaire
 
 
-%nonassoc tELSE
-
 %%
 %start File;
 

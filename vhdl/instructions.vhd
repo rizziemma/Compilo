@@ -52,7 +52,7 @@ impure function from_file(FileName : STRING) return instr_mem_array is
   variable Result       : instr_mem_array := (others => (others => '0'));
 
 begin
-  for i in 0 to 255loop
+  for i in 0 to 255 loop
     exit when endfile(FileHandle);
 
     readline(FileHandle, CurrentLine);
