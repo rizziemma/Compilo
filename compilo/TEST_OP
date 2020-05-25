@@ -1,0 +1,9 @@
+int main(){
+	int a, b;
+	a = 2*3+4;
+	b = 2*(3+4);
+	const int c = 0;
+	const int d;
+	d=1;
+	return 0;
+}
