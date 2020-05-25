@@ -50,7 +50,7 @@ begin
 Work :process 
 	begin
 	
-	wait until CLK'event and CLK = '1';
+	wait until CLK'event and CLK = '0';
 	if(RST = '0') then
 		mem <= (others => (others => '0'));
 		Val_Out <= (others => '0');

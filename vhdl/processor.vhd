@@ -94,9 +94,9 @@ architecture Behavioral of processor is
 	signal OP : STD_LOGIC_VECTOR (31 downto 0);
 	
 	--Args
-	signal A1, A2, A3, A3_sync, A4 : STD_LOGIC_VECTOR (7 downto 0);
-	signal OP1, OP2, OP3, OP3_sync, OP4 : STD_LOGIC_VECTOR (7 downto 0);
-	signal B1, B1_mux, B2, B2_mux, B3, B3_sync, B3_mux, B4 : STD_LOGIC_VECTOR (7 downto 0);
+	signal A1, A2, A3, A4 : STD_LOGIC_VECTOR (7 downto 0);
+	signal OP1, OP2, OP3, OP4 : STD_LOGIC_VECTOR (7 downto 0);
+	signal B1, B1_mux, B2, B2_mux, B3, B3_mux, B4 : STD_LOGIC_VECTOR (7 downto 0);
 	signal C1, C2 : STD_LOGIC_VECTOR (7 downto 0); 
 	
 	signal W, RW : STD_LOGIC;
@@ -193,26 +193,14 @@ c_memory : memory PORT MAP (
 		RW 		=> RW
 );
 
---EX/MEM
-pipe3_sync : pipeline PORT MAP (
-		CLK 	 => CLK,
-		OP 	 => OP3,
-		A 		 => A3,
-		B 		 => B3,
-		C 		 =>  (others => '0'),
-		Out_OP => OP3_sync,
-		Out_A  => A3_sync,
-		Out_B  => B3_sync,
-		Out_C  => open
-	);
 	
 	
 
 --MEM/RE
 pipe4 : pipeline PORT MAP (
 		CLK => CLK,
-		OP => OP3_sync,
-		A => A3_sync,
+		OP => OP3,
+		A => A3,
 		B => B3_mux,
 		C =>  (others => '0'),
 		Out_OP => OP4,
@@ -248,8 +236,8 @@ pipe4 : pipeline PORT MAP (
 			'1';
 	
 	--mux4 B3_mux <= Val_Out, B3
-	B3_mux <= Val_Out when (OP3_sync=X"07") else --LOAD
-				 B3_sync; 
+	B3_mux <= Val_Out when (OP3=X"07") else --LOAD
+				 B3; 
 	
 	
 	
