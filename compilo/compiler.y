@@ -73,7 +73,7 @@ Def :
     |tINT tID {add_symbol($2, 0, 1);} tEQ Expr tEI {int op[2]={addr($2), pop()}; 
     												add("COP", 2, op);}	//int a = 1;
 	|tCST tINT tID {add_symbol($3, 1, 1);} tEQ Expr tEI {int op[2]={addr($3), pop()};
-														 add("AFC", 2, op);}//cst a = 1;
+														 add("COP", 2, op);}//cst a = 1;
 	; 
 	
 DefN :
